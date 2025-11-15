@@ -40,6 +40,7 @@ coverage/
 # Personal notes
 NOTES.md
 TODO.md
+.claude
 
 # Deployment artifacts
 dist/
