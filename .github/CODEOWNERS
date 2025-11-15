@@ -1,0 +1,16 @@
+# BEACON Project Code Owners
+
+# Token Service (authentication critical)
+/token-service/ @londonperry
+
+# Deployment and Configuration (security critical)
+/raspberry-pi/ @londonperry
+/.github/ @londonperry
+/scripts/ @londonperry
+
+# Documentation
+/docs/ @londonperry
+*.md @londonperry
+
+# Default fallback
+* @londonperry
