@@ -6,3 +6,6 @@ contact_links:
   - name: Discussions
     url: https://github.com/londonperry/beacon-display/discussions
     about: Ask questions and share ideas with the community
+  - name: Troubleshooting
+    url: https://github.com/londonperry/beacon-display/blob/main/TROUBLESHOOTING.md
+    about: Common issues and diagnostic procedures

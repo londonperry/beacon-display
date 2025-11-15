@@ -7,6 +7,93 @@ on:
     branches: [ main, develop ]
 
 jobs:
+  token-service-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+        service: [laptop-version, cloud-version]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies - ${{ matrix.service }}
+      working-directory: token-service/${{ matrix.service }}
+      run: |
+        if [ -f "package-lock.json" ]; then
+          npm ci
+        else
+          npm install
+        fi
+
+    - name: Lint - ${{ matrix.service }}
+      working-directory: token-service/${{ matrix.service }}
+      run: npm run lint --if-present
+      continue-on-error: true
+
+    - name: Validate package.json - ${{ matrix.service }}
+      working-directory: token-service/${{ matrix.service }}
+      run: node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8'))" && echo "✓ package.json is valid"
+
+    - name: Check for .env.example - ${{ matrix.service }}
+      working-directory: token-service/${{ matrix.service }}
+      run: |
+        if [ ! -f ".env.example" ]; then
+          echo "ERROR: Missing .env.example file"
+          exit 1
+        fi
+        echo "✓ .env.example exists"
+
+    - name: Validate .env.example format - ${{ matrix.service }}
+      working-directory: token-service/${{ matrix.service }}
+      run: |
+        echo "Checking .env.example format..."
+        grep -E "^[A-Z_]+=" .env.example || exit 1
+        echo "✓ .env.example has valid format"
+
+    - name: Run health check test - ${{ matrix.service }}
+      working-directory: token-service/${{ matrix.service }}
+      run: |
+        # Create a minimal .env for testing
+        cp .env.example .env.test
+        # Start server in background
+        timeout 10 npm start &
+        SERVER_PID=$!
+        sleep 3
+
+        # Test health endpoint
+        if curl -f http://localhost:3000/health; then
+          echo "✓ Health check endpoint works"
+        else
+          echo "ERROR: Health check endpoint failed"
+          kill $SERVER_PID 2>/dev/null || true
+          exit 1
+        fi
+
+        # Cleanup
+        kill $SERVER_PID 2>/dev/null || true
+      continue-on-error: true
+      env:
+        NODE_ENV: test
+        PORT: 3000
+
+    - name: Run token service tests - ${{ matrix.service }}
+      working-directory: token-service/${{ matrix.service }}
+      run: npm test --if-present
+      continue-on-error: true
+      env:
+        NODE_ENV: test
+
+    - name: Security audit - ${{ matrix.service }}
+      working-directory: token-service/${{ matrix.service }}
+      run: npm audit --audit-level=moderate
+      continue-on-error: true
+
   lint-and-test:
     runs-on: ubuntu-latest
 
