@@ -22,6 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: 'token-service/laptop-version/package-lock.json'
 
     - name: Install token service dependencies
       working-directory: token-service/laptop-version
