@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEACON Display</title>
+
+    <!-- Power BI JavaScript library from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.22.3/dist/powerbi.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* Loading screen */
+        #loading {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        #loading h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        #loading .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        #loading .status {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error screen */
+        #error {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #1a1a1a;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        #error.visible {
+            display: flex;
+        }
+
+        #error h1 {
+            color: #ff6b6b;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        #error .message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        #error .details {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            max-width: 800px;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        #error .retry-info {
+            margin-top: 2rem;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Power BI embed container */
+        #reportContainer {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #reportContainer.visible {
+            display: block;
+        }
+
+        /* Status indicator (hidden by default, shown for debugging) */
+        #statusIndicator {
+            display: none;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            z-index: 1000;
+        }
+
+        #statusIndicator.show {
+            display: block;
+        }
+
+        .status-ok { color: #51cf66; }
+        .status-warning { color: #ffd43b; }
+        .status-error { color: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <h1>BEACON Display</h1>
+        <div class="spinner"></div>
+        <div class="status">Initializing...</div>
+    </div>
+
+    <!-- Error Screen -->
+    <div id="error">
+        <h1>⚠️ Display Error</h1>
+        <div class="message" id="errorMessage">Something went wrong</div>
+        <div class="details" id="errorDetails"></div>
+        <div class="retry-info">Retrying automatically...</div>
+    </div>
+
+    <!-- Power BI Report Container -->
+    <div id="reportContainer"></div>
+
+    <!-- Status Indicator (for debugging) -->
+    <div id="statusIndicator">
+        <span id="statusText">Initializing</span>
+    </div>
+
+    <!-- Load application modules -->
+    <script src="js/error-handler.js"></script>
+    <script src="js/config-loader.js"></script>
+    <script src="js/powerbi-embed.js"></script>
+
+    <script>
+        // Application initialization
+        (async function initializeBeacon() {
+            try {
+                updateStatus('Loading configuration...', 'warning');
+
+                // Load configuration from config.json
+                const config = await loadConfig();
+                console.log('Configuration loaded:', config.deviceId);
+
+                updateStatus('Initializing display...', 'warning');
+
+                // Initialize Power BI display
+                await initializePowerBIDisplay(config);
+
+                updateStatus('Display active', 'ok');
+
+            } catch (error) {
+                console.error('Fatal initialization error:', error);
+                showError(
+                    'Failed to initialize display',
+                    error.message,
+                    'Check browser console for details. Ensure config.json is valid and token service is accessible.'
+                );
+
+                // Retry initialization after 30 seconds
+                setTimeout(() => {
+                    console.log('Retrying initialization...');
+                    window.location.reload();
+                }, 30000);
+            }
+        })();
+
+        // Update status indicator (for debugging)
+        function updateStatus(text, type = 'ok') {
+            const indicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+
+            statusText.textContent = text;
+            indicator.className = `show status-${type}`;
+
+            // Auto-hide after 5 seconds if OK
+            if (type === 'ok') {
+                setTimeout(() => {
+                    indicator.classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        // Log device info for troubleshooting
+        console.log('BEACON Display System');
+        console.log('User Agent:', navigator.userAgent);
+        console.log('Screen:', window.screen.width, 'x', window.screen.height);
+        console.log('Viewport:', window.innerWidth, 'x', window.innerHeight);
+        console.log('Power BI Client loaded:', typeof window.powerbi !== 'undefined');
+    </script>
+</body>
+</html>

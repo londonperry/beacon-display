@@ -1,0 +1,15 @@
+{
+  "_comment": "BEACON Display Configuration - Public Power BI Sample",
+  "_description": "This configuration uses a publicly embedded Power BI report for initial testing. No Azure credentials or token service required.",
+  "_instructions": "Copy this file to config.json to test display client with public sample",
+
+  "deviceId": "test-display-public-sample",
+
+  "mode": "public",
+
+  "publicEmbedUrl": "https://app.powerbi.com/view?r=eyJrIjoiMGEwYzE3OTgtZWJmZS00MTJhLWI3MDEtNTU3NzljZjQ0YmVhIiwidCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsImMiOjV9",
+
+  "_note_1": "Public mode uses direct embed URL - no token service needed",
+  "_note_2": "Great for testing display client before setting up Azure",
+  "_note_3": "For personal Power BI reports, use config.json.example instead"
+}

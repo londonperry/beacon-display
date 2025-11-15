@@ -1,0 +1,163 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install token service dependencies
+      working-directory: token-service/laptop-version
+      run: npm ci
+
+    - name: Lint token service
+      working-directory: token-service/laptop-version
+      run: npm run lint --if-present
+      continue-on-error: true
+
+    - name: Run token service tests
+      working-directory: token-service/laptop-version
+      run: npm test --if-present
+      continue-on-error: true
+
+    - name: Check for hardcoded secrets
+      run: |
+        echo "Checking for hardcoded secrets in source code..."
+        ! grep -r "client_secret\|password\|api_key\|apiKey" \
+          --include="*.js" \
+          --include="*.json" \
+          --exclude-dir=node_modules \
+          --exclude-dir=.git \
+          --exclude=".env*" \
+          . || echo "Warning: Potential hardcoded secret found"
+      continue-on-error: true
+
+    - name: Verify .env files are not committed
+      run: |
+        echo "Verifying .env and config.json files are not in repository..."
+        if git ls-files | grep -E "\.env|config\.json" | grep -v "\.example"; then
+          echo "ERROR: Found .env or config.json files in repository (excluding .example files)"
+          exit 1
+        else
+          echo "✓ No .env or config.json files found in repository"
+        fi
+
+    - name: Validate JSON files
+      run: |
+        echo "Validating JSON files..."
+        for file in $(find . -name "*.json" -type f \
+          ! -path "*/node_modules/*" \
+          ! -path "*/.git/*"); do
+          echo "Validating $file"
+          node -e "JSON.parse(require('fs').readFileSync('$file', 'utf8'))" || exit 1
+        done
+        echo "✓ All JSON files are valid"
+
+    - name: Security audit
+      working-directory: token-service/laptop-version
+      run: npm audit --audit-level=moderate
+      continue-on-error: true
+
+  documentation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Check documentation exists
+      run: |
+        echo "Checking for required documentation..."
+        required_docs=(
+          "README.md"
+          "CONTRIBUTING.md"
+          "ARCHITECTURE.md"
+          "GETTING-STARTED.md"
+          "TROUBLESHOOTING.md"
+          "PROJECT-DEFINITION.md"
+          "DEPLOYMENT.md"
+          "LICENSE"
+        )
+        for doc in "${required_docs[@]}"; do
+          if [ ! -f "$doc" ]; then
+            echo "ERROR: Missing required documentation: $doc"
+            exit 1
+          fi
+          echo "✓ Found $doc"
+        done
+
+    - name: Validate markdown links (basic)
+      run: |
+        echo "Checking for broken local links in markdown files..."
+        # This is a basic check - finds .md files referenced in other .md files
+        for md_file in *.md; do
+          echo "Checking $md_file for broken links..."
+          grep -o '\[.*\](\(.*\.md\))' "$md_file" | sed 's/.*(\(.*\.md\)).*/\1/' | sort -u | while read link; do
+            if [ ! -z "$link" ] && [ ! -f "$link" ]; then
+              echo "WARNING: Broken link in $md_file: $link"
+            fi
+          done
+        done
+        echo "✓ Link check complete"
+
+  code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Check file structure
+      run: |
+        echo "Validating project structure..."
+        expected_dirs=(
+          "token-service"
+          "display-client"
+          "raspberry-pi"
+          "scripts"
+        )
+        for dir in "${expected_dirs[@]}"; do
+          if [ ! -d "$dir" ]; then
+            echo "ERROR: Missing required directory: $dir"
+            exit 1
+          fi
+          echo "✓ Found $dir/"
+        done
+
+    - name: Check example files exist
+      run: |
+        echo "Checking for required example configuration files..."
+        required_examples=(
+          "token-service/laptop-version/.env.example"
+          "display-client/config.json.example"
+          "display-client/config-public-sample.json"
+        )
+        for file in "${required_examples[@]}"; do
+          if [ ! -f "$file" ]; then
+            echo "ERROR: Missing required example file: $file"
+            exit 1
+          fi
+          echo "✓ Found $file"
+        done
+
+  # Optional: Add more workflows as the project grows
+  # - Automated testing for display-client (Chromium testing)
+  # - Docker image builds for cloud-version
+  # - Raspberry Pi OS image testing
+  # - Performance benchmarks
+

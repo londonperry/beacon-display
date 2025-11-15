@@ -1,0 +1,55 @@
+# BEACON Display - Git Ignore File
+# Prevents committing sensitive data and local files
+
+# Environment variables and secrets
+.env
+*.env
+!.env.example
+
+# Configuration files with real credentials
+config.json
+!config.json.example
+!config-public-sample.json
+
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Raspberry Pi specific
+raspberry-pi/*.img
+raspberry-pi/*.zip
+
+# Testing and development
+test-results/
+coverage/
+
+# Personal notes
+NOTES.md
+TODO.md
+
+# Deployment artifacts
+dist/
+build/
+
+# SSH keys
+*.pem
+*.key
+id_rsa*
+
+# Device inventory (contains IPs and sensitive info)
+device-inventory.txt
+displays.txt

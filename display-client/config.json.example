@@ -1,0 +1,35 @@
+{
+  "_comment": "BEACON Display Configuration - Personal Azure/Power BI",
+  "_instructions": [
+    "1. Copy this file to config.json",
+    "2. Replace YOUR-* placeholders with your actual values",
+    "3. Never commit config.json to Git (it's in .gitignore)"
+  ],
+
+  "deviceId": "my-test-display",
+
+  "tokenServiceUrl": "http://YOUR-LAPTOP-IP:3000/api/embed-token",
+
+  "groupId": "YOUR-WORKSPACE-ID",
+
+  "reportId": "YOUR-REPORT-ID",
+
+  "refreshIntervalSeconds": 60,
+
+  "tokenRefreshMinutes": 50,
+
+  "filters": {
+    "_example": "department",
+    "_value": "bakery",
+    "_note": "Optional: Add report-level filters here (department, location, team, etc.). Remove this section if not needed."
+  },
+
+  "_how_to_get_values": {
+    "deviceId": "Any descriptive name for this display (e.g., sales-team-1, bakery-metrics, hr-dashboard)",
+    "tokenServiceUrl": "URL to your token service. Replace YOUR-LAPTOP-IP with your laptop's IP address (find with 'ipconfig' on Windows or 'ifconfig' on Mac/Linux)",
+    "groupId": "Power BI workspace ID from URL: app.powerbi.com/groups/{THIS-IS-THE-GROUP-ID}/...",
+    "reportId": "Power BI report ID from URL: .../reports/{THIS-IS-THE-REPORT-ID}/...",
+    "refreshIntervalSeconds": "How often to refresh report data (minimum 10, recommended 60)",
+    "tokenRefreshMinutes": "How often to refresh embed token (must be less than 60, recommended 50)"
+  }
+}

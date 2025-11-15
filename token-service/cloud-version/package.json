@@ -1,0 +1,53 @@
+{
+  "name": "beacon-token-service-cloud",
+  "version": "1.0.0",
+  "description": "BEACON Power BI embed token generation service for production deployment on cloud platforms (Azure, AWS, Docker)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=development nodemon server.js",
+    "prod": "NODE_ENV=production node server.js",
+    "health-check": "curl -f http://localhost:3000/health || exit 1",
+    "ready-check": "curl -f http://localhost:3000/ready || exit 1",
+    "test": "node server.js & sleep 5 && npm run health-check && npm run ready-check && kill %1",
+    "docker:build": "docker build -t beacon-token-service:latest .",
+    "docker:run": "docker run -p 3000:3000 --env-file .env beacon-token-service:latest"
+  },
+  "keywords": [
+    "powerbi",
+    "authentication",
+    "beacon",
+    "raspberry-pi",
+    "embed-token",
+    "azure-ad",
+    "msal",
+    "dashboard",
+    "analytics",
+    "iot",
+    "cloud",
+    "production",
+    "azure",
+    "aws",
+    "docker"
+  ],
+  "author": "BEACON Project",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/beacon-display.git",
+    "directory": "token-service/cloud-version"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "@azure/msal-node": "^2.6.0",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

@@ -1,0 +1,39 @@
+# BEACON Display - Systemd Service Definition
+# This file gets installed to /etc/systemd/system/ by install.sh
+# Controls auto-start and restart behavior of the display
+
+[Unit]
+Description=BEACON Power BI Display Service
+Documentation=https://github.com/yourusername/beacon-display
+After=network-online.target graphical.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# User will be set dynamically by install.sh
+User=%BEACON_USER%
+Group=%BEACON_USER%
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%BEACON_HOME%/.Xauthority
+
+# Wait 10 seconds after boot for system to stabilize
+ExecStartPre=/bin/sleep 10
+
+# Start the display
+ExecStart=%BEACON_HOME%/beacon-display/raspberry-pi/start-display.sh
+
+# Restart behavior
+Restart=always
+RestartSec=10
+
+# Resource limits (prevent runaway processes)
+MemoryMax=400M
+CPUQuota=90%
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=beacon-display
+
+[Install]
+WantedBy=graphical.target
