@@ -241,5 +241,5 @@ gh label list --repo=owner/repo --limit=100
 
 **For questions about specific labels, check**:
 - [CONTRIBUTING.md](CONTRIBUTING.md) - How to contribute
-- [GETTING-STARTED.md](../GETTING-STARTED.md) - Setup guide
+- [GETTING-STARTED.md](../docs/setup/README.md) - Setup guide
 - GitHub repository > Issues > Labels

@@ -1,19 +1,33 @@
-# BEACON Project Definition
+# BEACON Project Overview
 
-Business case, objectives, and project scope.
+**Audience**: For executives, stakeholders, and anyone new to the BEACON project
+
+---
 
 ## Executive Summary
 
 BEACON delivers real-time operational intelligence to back-office teams through dedicated, always-on Power BI dashboard displays. Using low-cost Raspberry Pi devices, organizations transform existing monitors and TVs into self-managing dashboard displays at a fraction of traditional digital signage costs.
 
 **Problem**: Limited data visibility for operational teams, expensive digital signage solutions, underutilized display infrastructure
+
 **Solution**: Transform existing displays into self-managing, dedicated dashboards for $50-150 per screen
+
 **Status**: Proof of Concept phase
+
 **Next**: Stakeholder demo → Pilot approval → Multi-location rollout
+
+---
+
+## Project Mission
+
+Democratize real-time data visibility by repurposing existing display infrastructure with dedicated, zero-touch displays that cost 70-90% less than commercial solutions while improving operational visibility.
+
+---
 
 ## Problem Statement
 
 ### Current State (Traditional Solutions)
+
 - **Limited Visibility**: Operational teams lack constant access to real-time metrics
 - **Underutilized Infrastructure**: Existing monitors/TVs in break rooms, offices sit idle or show cable news
 - **High Cost**: Commercial digital signage ($1,500+ per screen) and enterprise display appliances prohibit widespread deployment
@@ -21,11 +35,39 @@ BEACON delivers real-time operational intelligence to back-office teams through 
 - **Configuration Drift**: Interactive devices invite non-work usage and lose their intended purpose over time
 
 ### Desired State (BEACON Solution)
+
 - **Dedicated Display**: Single-purpose devices focused solely on data visibility
 - **Always-On**: 24/7 operation, no charging needed, instant visibility
 - **Low Cost**: 85% reduction in hardware costs enables broader deployment
 - **Zero-Touch**: No user interaction required, eliminates training and support burden
 - **Reliable**: Auto-recovery from power/network failures, self-healing watchdog
+
+---
+
+## Solution Overview
+
+### Two-Component Architecture
+
+**Token Service** (Node.js):
+- Authenticates with Azure AD using service principal
+- Generates Power BI embed tokens (1-hour validity)
+- Two versions: laptop (POC) and cloud (production)
+
+**Display Client** (HTML/JavaScript):
+- Runs in Chromium browser on Raspberry Pi
+- Embeds Power BI reports using tokens
+- Auto-refreshes data (60 sec) and tokens (50 min)
+
+### Key Features
+
+- **Self-Managing**: Auto-recovery from crashes, network issues, power outages
+- **Zero-Touch**: No user interaction required (view-only)
+- **Secure**: Service principal authentication, token-based access, network segmentation
+- **Cost-Effective**: $50-150 per screen vs. $1,500+ for commercial solutions
+- **Scalable**: Manage 100+ devices from centralized dashboard
+- **Flexible**: Support for multiple hardware tiers based on dashboard complexity
+
+---
 
 ## Use Cases
 
@@ -78,6 +120,8 @@ BEACON delivers real-time operational intelligence to back-office teams through 
 - Cash flow and accounts receivable aging
 - Expense management and approval workflows
 - Monthly/quarterly close progress
+
+---
 
 ### Grocery Store Operational Areas
 
@@ -147,25 +191,20 @@ BEACON delivers real-time operational intelligence to back-office teams through 
 - Department labor productivity
 - Key operational metrics rollup
 
-## Goals
+---
+
+## Current Status
 
 ### POC Phase (Current)
+
+**Objectives**:
 1. Demonstrate Raspberry Pi can reliably display Power BI dashboards
 2. Validate $50 hardware cost per unit
 3. Implement zero-touch authentication (service principal)
 4. Measure 72-hour uptime and recovery
 5. Identify requirements for corporate deployment
 
-### Production Phase (Future)
-1. Deploy dedicated data displays to operational areas
-2. Deploy 100+ units at <$150/unit total cost
-3. Provide real-time operational metrics to all locations
-4. Enable centralized remote management
-5. Maintain 98%+ uptime across all locations
-
-## Success Metrics
-
-### POC Criteria
+**Success Criteria**:
 - [ ] Power BI report displays full-screen
 - [ ] Auto-refresh every 60 seconds
 - [ ] 72-hour continuous operation without intervention
@@ -173,7 +212,23 @@ BEACON delivers real-time operational intelligence to back-office teams through 
 - [ ] Hardware cost <$60
 - [ ] Stakeholder approval for pilot
 
-### Production Criteria (Future)
+**Timeline**:
+- **Week 1**: Hardware setup, Azure config, token service
+- **Week 2**: Pi deployment, 72-hour test, documentation
+- **Next**: Stakeholder demo and pilot approval
+
+---
+
+### Production Phase (Future)
+
+**Objectives**:
+1. Deploy dedicated data displays to operational areas
+2. Deploy 100+ units at <$150/unit total cost
+3. Provide real-time operational metrics to all locations
+4. Enable centralized remote management
+5. Maintain 98%+ uptime across all locations
+
+**Success Criteria**:
 - 98% uptime across all devices
 - <2 support incidents per location annually
 - Zero user training required (touchless operation)
@@ -182,23 +237,149 @@ BEACON delivers real-time operational intelligence to back-office teams through 
 - Positive user feedback (improved data visibility)
 - 70-90% cost savings vs commercial digital signage solutions
 
+---
+
+## Project Roadmap
+
+### Phase 1: POC Development (2 weeks)
+**Status**: In progress
+
+**Activities**:
+- Hardware setup, Azure config, token service
+- Pi deployment, 72-hour test, documentation
+
+---
+
+### Phase 2: Stakeholder Demo (1 week)
+**Status**: Pending POC completion
+
+**Activities**:
+- Prepare presentation and cost analysis
+- Live demo with backup video
+- Q&A preparation
+
+---
+
+### Phase 3: Pilot Approval (2-4 weeks)
+**Status**: Planned
+
+**Activities**:
+- IT security review
+- Network requirements gathering
+- Pilot store selection (10 stores)
+- Budget approval
+
+---
+
+### Phase 4: Production Pilot (6-8 weeks)
+**Status**: Planned
+
+**Activities**:
+- 10-store deployment
+- Monitoring and refinement
+- Full rollout planning
+
+---
+
+### Phase 5: Production Rollout (14 weeks)
+**Status**: Future
+
+**Activities**:
+- Phased deployment (3 waves: 30, 40, 30 stores)
+- Centralized management
+- Support team training
+- Ongoing operations
+
+---
+
+## Value Proposition
+
+### Financial Benefits
+
+**Cost Comparison (100 displays, 5 years)**:
+```
+BEACON (baseline):                $85,973    $860/display
+BEACON (optimized):               $30,961    $310/display
+Commercial Digital Signage:       $150,000+  $1,500+/display
+Desktop PC Repurposing:           $120,000+  $1,200+/display
+
+Savings vs. Commercial:           74-79%
+Savings vs. Desktop PCs:          40-74%
+```
+
+**Key Insight**: Repurpose existing monitors/TVs = $0 display hardware cost
+
+---
+
+### Operational Benefits
+
+- **Lower device theft risk**: Less valuable hardware
+- **No charging management**: Always-on, plugged in
+- **Simpler user experience**: View-only, no navigation/training
+- **Faster boot times**: ~2 min vs 5+ min tablets
+- **Zero configuration drift**: No user interaction
+- **Dedicated purpose**: Prevents non-work usage
+
+---
+
+### Data Visibility Value
+
+- **Constant metrics visibility**: Improves team awareness
+- **Real-time data**: Enables faster decision-making
+- **Democratized access**: Operational intelligence for all teams
+- **Reduced manual reporting**: Automated data distribution
+- **Data-driven culture**: Encourages metrics-based decisions
+
+---
+
+### Food Safety Applicability (for applicable environments)
+
+- **Touchless operation**: Eliminates cross-contamination risk
+- **No cleaning protocols**: View-only design requires no sanitization
+- **Sanitation compliance**: Supports food safety requirements
+
+---
+
+## Strategic Alignment
+
+**Data-Driven Culture**: Democratizes access to real-time operational metrics across all teams
+
+**Cost Optimization**: 85% reduction in display infrastructure costs enables broader deployment
+
+**Technology Modernization**: Cloud-based, IoT-enabled, scalable solution
+
+**Operational Excellence**: Real-time data visibility enables faster, more informed decision-making
+
+**Employee Empowerment**: Gives frontline teams immediate visibility into performance and goals
+
+**Touchless Operation**: Zero-interaction design ideal for any operational environment (including food safety-critical areas)
+
+---
+
 ## Scope
 
 ### In Scope - POC
+
 - Single Raspberry Pi device setup
 - Personal Azure/Power BI integration
 - Home network deployment
 - Stakeholder documentation and demo
 - Cost analysis and ROI projections
 
+---
+
 ### In Scope - Production (Future)
+
 - Multi-device centralized management
 - Corporate network integration
 - IT security review and compliance
 - Store-specific data filtering
 - Remote management tools
 
+---
+
 ### Out of Scope
+
 - Creating new Power BI reports (use existing reports)
 - TV/monitor hardware procurement (use existing displays)
 - Corporate network infrastructure changes (IT responsibility)
@@ -206,101 +387,7 @@ BEACON delivers real-time operational intelligence to back-office teams through 
 - Customer-facing public displays (operational areas only)
 - Interactive touchscreen functionality (view-only by design)
 
-## Stakeholders
-
-| Role | Responsibility | Involvement |
-|------|---------------|-------------|
-| **VP Operations** | Budget approval, strategic alignment | Approve pilot, full rollout |
-| **You** | Technical POC development | Build, demo, document |
-| **IT Infrastructure** | Production deployment support | Pilot phase onwards |
-| **Department Managers** | End users, define metrics needs | Requirements gathering |
-| **Operational Teams** | Daily users, provide feedback | Pilot testing |
-| **Power BI Team** | Report access and permissions | Setup and support |
-| **Information Security** | Security review | Production approval |
-
-## Timeline
-
-### Phase 1: POC Development (2 weeks)
-**Week 1**: Hardware setup, Azure config, token service
-**Week 2**: Pi deployment, 72-hour test, documentation
-
-### Phase 2: Stakeholder Demo (1 week)
-- Prepare presentation and cost analysis
-- Live demo with backup video
-- Q&A preparation
-
-### Phase 3: Pilot Approval (2-4 weeks)
-- IT security review
-- Network requirements gathering
-- Pilot store selection (10 stores)
-- Budget approval
-
-### Phase 4: Production Pilot (6-8 weeks)
-- 10-store deployment
-- Monitoring and refinement
-- Full rollout planning
-
-## Risk Assessment
-
-### Technical Risks
-
-| Risk | Likelihood | Impact | Mitigation |
-|------|------------|--------|------------|
-| Pi performance insufficient | Low | High | Test complex reports, upgrade to Pi 4/5 if needed ($90-132) |
-| Network connectivity issues | Medium | Medium | Document requirements, test on corporate network |
-| Power BI licensing limits | Low | High | Verify with IT before pilot |
-| Token service complexity | Medium | Medium | Robust error handling, fallback procedures |
-| Display compatibility | Low | Medium | Test with various monitor types, HDMI/resolution compatibility |
-
-### Business Risks
-
-| Risk | Likelihood | Impact | Mitigation |
-|------|------------|--------|------------|
-| Stakeholder rejection | Low | High | Strong demo, clear value proposition, pilot program |
-| Budget constraints | Low | Low | Low upfront cost, leverage existing displays |
-| IT security concerns | Medium | Medium | Proactive security review, address concerns early |
-| Scope creep | High | Low | Clear POC vs production boundaries |
-| Underutilized displays | Low | Medium | Identify existing display inventory before deployment |
-
-## Budget
-
-### POC Cost
-- **Hardware**: $50 (one device)
-- **Development**: 20-30 hours personal time
-- **Cloud**: $0 (Azure free tier)
-- **Total**: <$100
-
-### Production Pilot (10 Locations)
-- **Hardware**: $500-900 (10 devices @ $50-90, depending on tier)
-- **Token Service**: $2,000 (setup, security review)
-- **Management**: $1,000/year
-- **Year 1 Total**: $3,500-4,000
-- **Display Cost**: $0 (repurpose existing monitors/TVs)
-
-### Full Rollout (100 Locations)
-- **Hardware**: $5,000-11,000 (100 devices @ $50-110, mixed tiers)
-- **Operating**: $3,200-16,600/year (depends on automation level)
-- **5-Year TCO**: $31,000-86,000 (based on optimization strategies)
-- **Display Cost**: $0 (repurpose existing infrastructure)
-
-### Value Comparison
-
-| Approach | 5-Year TCO (100) | Hardware per Display | Notes |
-|----------|------------------|----------------------|-------|
-| BEACON Entry (Pi Zero 2 W) | $86,000 | $48 | Simple dashboards, existing displays |
-| BEACON Mixed Tiers | $78,000 | $77 avg | Optimized for use case |
-| BEACON Optimized | $31,000 | $48-110 | Custom management, automation |
-| Commercial Digital Signage | $150,000+ | $1,500+ | Includes hardware + software licensing |
-| Repurposed Desktop PCs | $120,000+ | $200+ | Higher power, maintenance costs |
-
-## Strategic Alignment
-
-**Data-Driven Culture**: Democratizes access to real-time operational metrics across all teams
-**Cost Optimization**: 85% reduction in display infrastructure costs enables broader deployment
-**Technology Modernization**: Cloud-based, IoT-enabled, scalable solution
-**Operational Excellence**: Real-time data visibility enables faster, more informed decision-making
-**Employee Empowerment**: Gives frontline teams immediate visibility into performance and goals
-**Touchless Operation**: Zero-interaction design ideal for any operational environment (including food safety-critical areas)
+---
 
 ## Next Steps
 
@@ -330,8 +417,16 @@ BEACON delivers real-time operational intelligence to back-office teams through 
 
 ---
 
+## Related Documentation
+
+- [Business Case](business-case.md) - Detailed business drivers, stakeholders, competitive analysis
+- [Deployment Overview](../deployment/README.md) - Enterprise deployment phases and gates
+- [Cost Analysis](../deployment/cost-analysis.md) - TCO models and ROI
+- [GETTING-STARTED.md](../../GETTING-STARTED.md) - Technical setup guide
+- [ARCHITECTURE.md](../../ARCHITECTURE.md) - System architecture and design
+
+---
+
 **Last Updated**: 2025
 **Review Date**: After POC completion
 **Status**: Active Development
-
-See [GETTING-STARTED.md](GETTING-STARTED.md) for technical setup.

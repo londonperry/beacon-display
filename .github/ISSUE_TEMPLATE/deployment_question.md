@@ -76,10 +76,10 @@ What's your budget/cost target?
 
 Have you reviewed these?
 
-- [ ] [DEPLOYMENT.md](../../DEPLOYMENT.md) - Enterprise deployment guide (cost models, scaling strategies)
-- [ ] [ARCHITECTURE.md](../../ARCHITECTURE.md) - System design and component interaction
-- [ ] [GETTING-STARTED.md](../../GETTING-STARTED.md) - POC setup (foundation for scaling)
-- [ ] [TROUBLESHOOTING.md](../../TROUBLESHOOTING.md) - Performance and optimization tips
+- [ ] [DEPLOYMENT.md](../../docs/deployment/README.md) - Enterprise deployment guide (cost models, scaling strategies)
+- [ ] [ARCHITECTURE.md](../../docs/architecture/README.md) - System design and component interaction
+- [ ] [GETTING-STARTED.md](../../docs/setup/README.md) - POC setup (foundation for scaling)
+- [ ] [TROUBLESHOOTING.md](../../docs/troubleshooting/README.md) - Performance and optimization tips
 
 ## 🎯 Your Scenario
 
@@ -117,8 +117,8 @@ Help us understand your use case:
 
 ## ✅ Checklist
 
-- [ ] I've read DEPLOYMENT.md
-- [ ] I've reviewed ARCHITECTURE.md to understand the system
+- [ ] I've read [DEPLOYMENT.md](../../docs/deployment/README.md)
+- [ ] I've reviewed [ARCHITECTURE.md](../../docs/architecture/README.md) to understand the system
 - [ ] I understand the cost models and scaling strategies
 - [ ] I've provided details about my deployment scenario
 - [ ] I've mentioned any special security requirements

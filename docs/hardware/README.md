@@ -1,6 +1,8 @@
-# BEACON Hardware Compatibility Guide
+# BEACON Hardware Guide
 
-Device portability and multi-platform support.
+**Audience:** For hardware selection, procurement, and compatibility assessment
+
+This document provides hardware compatibility information, selection guidance, and device specifications.
 
 ---
 
@@ -18,10 +20,76 @@ BEACON uses a **single codebase** with **hardware abstraction** to support multi
 
 ---
 
+## Quick Selection Guide
+
+### Choose Raspberry Pi Zero 2 W if:
+- Budget is primary concern ($50/device target)
+- Simple dashboards (1-5 visuals)
+- Standard 1080p displays
+- WiFi 2.4GHz available
+- No map visualizations
+
+**Cost:** ~$50 total
+**Performance:** Good for simple dashboards
+**Lifespan:** 5+ years
+
+### Choose Raspberry Pi 4 if:
+- Complex dashboards (10-20 visuals)
+- Faster refresh rates needed
+- Map visualizations required
+- Future-proofing desired
+- Budget allows $75/device
+
+**Cost:** ~$75 total (2GB model)
+**Performance:** Excellent for most dashboards
+**Lifespan:** 5+ years
+
+### Choose Raspberry Pi 5 if:
+- Very complex dashboards (20+ visuals)
+- Multiple report rotation
+- 4K displays
+- Real-time data (15-30s refresh)
+- Maximum performance needed
+
+**Cost:** ~$100 total (4GB model)
+**Performance:** Best-in-class for dashboards
+**Lifespan:** 5+ years
+
+### Choose Intel NUC if:
+- Extremely complex dashboards
+- 4K multi-monitor setups
+- Video content in dashboards
+- Existing x86 infrastructure
+- Budget >$150/device acceptable
+
+**Cost:** $200-400 total
+**Performance:** Overkill for most use cases
+**Lifespan:** 7+ years
+
+---
+
+## Compatibility Matrix
+
+| Feature | Pi Zero 2 W | Pi 4 | Pi 5 | Intel NUC | Orange Pi 5 |
+|---------|------------|------|------|-----------|-------------|
+| **Code Changes Needed** | None | None | None | None | None |
+| **Memory Threshold** | 435MB (85% of 512MB) | 1700MB (85% of 2GB) | 3400MB (85% of 4GB) | 2000MB (capped) | 2000MB (capped) |
+| **Systemd MemoryMax** | 412M | 1900M | 3900M | 2000M | 2000M |
+| **Temperature Monitoring** | vcgencmd | vcgencmd | vcgencmd | thermal_zone | thermal_zone |
+| **GPU Memory Split** | 128MB | 128MB | 128MB | N/A | N/A |
+| **Chromium Binary** | chromium-browser | chromium-browser | chromium-browser | chromium/chrome | chromium |
+| **Boot Config** | /boot/config.txt | /boot/config.txt | /boot/firmware/config.txt | N/A | N/A |
+| **WiFi** | 2.4GHz only | 2.4/5GHz dual | 2.4/5GHz dual | Varies | 2.4/5GHz dual |
+| **Ethernet** | USB adapter | Gigabit | Gigabit | Gigabit | Gigabit |
+| **HDMI** | Mini-HDMI | Micro-HDMI × 2 | Micro-HDMI × 2 | Standard HDMI | Standard HDMI |
+| **Max Resolution** | 1080p60 | 4K60 | 4K60 | 4K60 | 4K60 |
+
+---
+
 ## What's Device-Agnostic (No Changes Needed)
 
 ### ✅ Display Client (100% Portable)
-**Files**: `display-client/*`
+**Files:** `display-client/*`
 
 The HTML/JavaScript display client works on **any** device with a modern Chromium-based browser:
 - **No code changes needed**
@@ -35,7 +103,7 @@ The HTML/JavaScript display client works on **any** device with a modern Chromiu
 - No native dependencies
 
 ### ✅ Token Service (100% Portable)
-**Files**: `token-service/*`
+**Files:** `token-service/*`
 
 The Node.js token service runs on **any** platform:
 - **No code changes needed**
@@ -48,7 +116,7 @@ The Node.js token service runs on **any** platform:
 ## What's Hardware-Aware (Automatic Adaptation)
 
 ### 🔧 Hardware Abstraction Layer
-**File**: `raspberry-pi/device-detect.sh`
+**File:** `raspberry-pi/device-detect.sh`
 
 This script automatically:
 - Detects device type (Pi Zero 2 W, Pi 4, Pi 5, NUC, Orange Pi, etc.)
@@ -60,7 +128,7 @@ This script automatically:
 **No manual configuration required** - scripts source this automatically.
 
 ### 🔧 Installation Script
-**File**: `raspberry-pi/install.sh`
+**File:** `raspberry-pi/install.sh`
 
 **Auto-adapts to:**
 - Different Chromium package names (`chromium-browser` vs `chromium`)
@@ -75,15 +143,11 @@ This script automatically:
 - ✅ Dynamic memory limit calculation
 
 ### 🔧 Watchdog Script
-**File**: `raspberry-pi/watchdog.sh`
+**File:** `raspberry-pi/watchdog.sh`
 
 **Auto-adapts to:**
-- **Memory thresholds**: Calculates 85% based on total RAM
-  - Pi Zero 2 W (512MB): 435MB threshold
-  - Pi 4 (2GB): 1,700MB threshold
-  - Pi 5 (4GB): 3,400MB threshold
-  - NUC (8GB): 2,000MB threshold (capped, display doesn't need more)
-- **Temperature monitoring**: Uses device-specific methods
+- **Memory thresholds:** Calculates 85% based on total RAM
+- **Temperature monitoring:** Uses device-specific methods
   - Raspberry Pi: `vcgencmd measure_temp`
   - Intel/Orange Pi: `/sys/class/thermal/thermal_zone0/temp`
 
@@ -93,10 +157,10 @@ This script automatically:
 - ✅ Graceful fallback if temperature unavailable
 
 ### 🔧 Start Script
-**File**: `raspberry-pi/start-display.sh`
+**File:** `raspberry-pi/start-display.sh`
 
 **Auto-adapts to:**
-- **Chromium binary**: Tries `chromium-browser`, `chromium`, `google-chrome`, `chrome`
+- **Chromium binary:** Tries `chromium-browser`, `chromium`, `google-chrome`, `chrome`
 - Different distro naming conventions
 
 **Changes made:**
@@ -104,24 +168,11 @@ This script automatically:
 - ✅ Displays device info on startup for debugging
 
 ### 🔧 Systemd Service
-**Generated by**: `install.sh`
+**Generated by:** `install.sh`
 
 **Auto-adapts to:**
 - Memory limits based on device total RAM
 - Automatically set during installation
-
----
-
-## Device-Specific Behavior Matrix
-
-| Feature | Pi Zero 2 W | Pi 4 | Pi 5 | Intel NUC | Orange Pi 5 |
-|---------|------------|------|------|-----------|-------------|
-| **Memory Threshold** | 435MB (85% of 512MB) | 1700MB (85% of 2GB) | 3400MB (85% of 4GB) | 2000MB (capped) | 2000MB (capped) |
-| **Systemd MemoryMax** | 412M | 1900M | 3900M | 2000M | 2000M |
-| **Temperature Monitoring** | vcgencmd | vcgencmd | vcgencmd | thermal_zone | thermal_zone |
-| **GPU Memory Split** | 128MB (set in /boot/config.txt) | 128MB | 128MB | N/A | N/A |
-| **Chromium Binary** | chromium-browser | chromium-browser | chromium-browser | chromium/chrome | chromium |
-| **Boot Config** | /boot/config.txt | /boot/config.txt | /boot/firmware/config.txt | N/A | N/A |
 
 ---
 
@@ -164,6 +215,73 @@ CPU Temperature: 45.0°C
 Chromium Binary: chromium
 Recommended Memory Limit: 2000M
 ```
+
+---
+
+## Performance Tuning by Device
+
+### Pi Zero 2 W (512MB RAM)
+**Recommendations:**
+- Simple dashboards (1-5 visuals)
+- 60-second refresh interval
+- Single report only
+- Avoid map visualizations
+
+**Config adjustments:**
+```json
+{
+  "refreshIntervalSeconds": 60,
+  "tokenRefreshMinutes": 50
+}
+```
+
+**Expected performance:**
+- Boot time: 90-120 seconds
+- Memory usage: 300-400MB (60-80%)
+- CPU load: 30-50%
+- Temperature: 45-55°C
+
+### Pi 4 (2GB/4GB) or Pi 5 (4GB/8GB)
+**Capabilities:**
+- Complex dashboards (10-20+ visuals)
+- 30-second refresh interval
+- Multi-report rotation (with enhancement)
+- Map visualizations supported
+
+**Config adjustments:**
+```json
+{
+  "refreshIntervalSeconds": 30,
+  "tokenRefreshMinutes": 50
+}
+```
+
+**Expected performance:**
+- Boot time: 60-90 seconds
+- Memory usage: 400-800MB
+- CPU load: 20-40%
+- Temperature: 40-50°C
+
+### Intel NUC (8GB+)
+**Capabilities:**
+- Most complex dashboards (25+ visuals)
+- Real-time refresh (10-15 seconds)
+- 4K displays supported
+- Video content in dashboards
+
+**Config adjustments:**
+```json
+{
+  "refreshIntervalSeconds": 15,
+  "tokenRefreshMinutes": 50
+}
+```
+
+**Expected performance:**
+- Boot time: 30-45 seconds
+- Memory usage: 600-1200MB
+- CPU load: 10-30%
+- Temperature: 35-45°C
 
 ---
 
@@ -223,55 +341,6 @@ Recommended Memory Limit: 2000M
 
 ---
 
-## Performance Tuning by Device
-
-### Pi Zero 2 W (512MB RAM)
-**Recommendations:**
-- Simple dashboards (1-5 visuals)
-- 60-second refresh interval
-- Single report only
-- Avoid map visualizations
-
-**Config adjustments:**
-```json
-{
-  "refreshIntervalSeconds": 60,
-  "tokenRefreshMinutes": 50
-}
-```
-
-### Pi 4 (2GB/4GB) or Pi 5 (4GB/8GB)
-**Capabilities:**
-- Complex dashboards (10-20+ visuals)
-- 30-second refresh interval
-- Multi-report rotation (with enhancement)
-- Map visualizations supported
-
-**Config adjustments:**
-```json
-{
-  "refreshIntervalSeconds": 30,
-  "tokenRefreshMinutes": 50
-}
-```
-
-### Intel NUC (8GB+)
-**Capabilities:**
-- Most complex dashboards (25+ visuals)
-- Real-time refresh (10-15 seconds)
-- 4K displays supported
-- Video content in dashboards
-
-**Config adjustments:**
-```json
-{
-  "refreshIntervalSeconds": 15,
-  "tokenRefreshMinutes": 50
-}
-```
-
----
-
 ## Chromium Package Differences
 
 Different distros use different package names. The `get_chromium_command()` function handles this automatically:
@@ -312,9 +381,9 @@ CHROMIUM_CMD=$(get_chromium_command)  # Auto-finds available binary
 - Armbian (for Orange Pi)
 
 ### ⚠️ Requires Modification
-- **Fedora/RHEL**: Change `apt-get` to `dnf/yum`
-- **Arch Linux**: Change `apt-get` to `pacman`
-- **Alpine Linux**: Change `apt-get` to `apk`
+- **Fedora/RHEL:** Change `apt-get` to `dnf/yum`
+- **Arch Linux:** Change `apt-get` to `pacman`
+- **Alpine Linux:** Change `apt-get` to `apk`
 
 ### ❌ Not Supported (Different Architecture)
 - Windows (needs PowerShell scripts)
@@ -365,6 +434,14 @@ CHROMIUM_CMD=$(get_chromium_command)  # Auto-finds available binary
 
 ---
 
-**Last Updated**: 2025
-**Maintained**: Active development
-**Questions**: See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) or [ARCHITECTURE.md](ARCHITECTURE.md)
+## Related Documentation
+
+- **[Raspberry Pi Details](raspberry-pi.md)** - Pi Zero 2W, Pi 4, Pi 5 specifications
+- **[Alternative Devices](alternative-devices.md)** - ODROID, Orange Pi, NUC options
+- **[Optimization Guide](optimization.md)** - Memory, browser, network, thermal optimization
+- **[Architecture Overview](../architecture/README.md)** - System design
+- **[Troubleshooting](../troubleshooting/README.md)** - Common issues
+
+---
+
+**Last Updated:** 2025-11-30

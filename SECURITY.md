@@ -612,10 +612,10 @@ Before submitting code or PRs:
 
 ## 📚 Related Documentation
 
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Security model overview
-- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Production security requirements
+- **[docs/architecture/security-model.md](docs/architecture/security-model.md)** - Security model overview
+- **[docs/deployment/planning.md](docs/deployment/planning.md)** - Production security requirements
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Security guidelines for contributors
-- **[GETTING-STARTED.md](GETTING-STARTED.md)** - POC setup and secret handling
+- **[docs/setup/README.md](docs/setup/README.md)** - POC setup and secret handling
 
 ---
 
@@ -634,8 +634,8 @@ Before submitting code or PRs:
 If you have security questions or concerns:
 
 1. **Check this document** - Most questions covered above
-2. **Review ARCHITECTURE.md** - Security model details
-3. **Check DEPLOYMENT.md** - Production requirements
+2. **Review docs/architecture/security-model.md** - Security model details
+3. **Check docs/deployment/planning.md** - Production requirements
 4. **Open GitHub Discussion** - Non-sensitive questions
 5. **Email maintainers** - Sensitive security concerns (privately)
 

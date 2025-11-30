@@ -19,15 +19,15 @@ Thank you for your interest in contributing to BEACON! This is a research and de
    cd beacon-display
    ```
 
-2. **Follow GETTING-STARTED.md**
+2. **Follow docs/setup/README.md**
    - Detailed step-by-step setup instructions
    - Three deployment phases: local testing, token service, full integration
    - Estimated time: 6 hours for complete setup
 
 3. **Review documentation**
-   - **ARCHITECTURE.md** - Understand the system design
-   - **TROUBLESHOOTING.md** - Common issues and solutions
-   - **DEPLOYMENT.md** - Enterprise deployment patterns
+   - **docs/architecture/README.md** - Understand the system design
+   - **docs/troubleshooting/README.md** - Common issues and solutions
+   - **docs/deployment/README.md** - Enterprise deployment patterns
 
 ## 📋 How to Contribute
 
@@ -114,11 +114,11 @@ Have an idea? Please [open an issue](https://github.com/londonperry/beacon-displ
 Documentation is part of the project. If you're improving code, consider improving docs too:
 
 - **README.md** - Quick start and overview
-- **GETTING-STARTED.md** - Step-by-step setup
-- **ARCHITECTURE.md** - Technical deep dive
-- **TROUBLESHOOTING.md** - Common issues
-- **DEPLOYMENT.md** - Enterprise deployment
-- **PROJECT-DEFINITION.md** - Business context
+- **docs/setup/README.md** - Step-by-step setup
+- **docs/architecture/README.md** - Technical deep dive
+- **docs/troubleshooting/README.md** - Common issues
+- **docs/deployment/README.md** - Enterprise deployment
+- **docs/project/README.md** - Business context
 - **Code comments** - Inline documentation
 
 If you notice documentation gaps, please open an issue or submit a PR!
@@ -229,14 +229,14 @@ We're particularly interested in:
 4. **Performance optimization** - Reduce memory usage, improve refresh speed
 5. **Raspberry Pi support** - Test on Pi variants, improve compatibility
 6. **Deployment automation** - Improve `deploy-to-pi.sh`, add more automation
-7. **Enterprise features** - Multi-device management, monitoring, alerting (see DEPLOYMENT.md)
+7. **Enterprise features** - Multi-device management, monitoring, alerting (see docs/deployment/README.md)
 
 ## ❓ Questions?
 
-- **Setup help**: See GETTING-STARTED.md or open an issue
-- **Architecture questions**: See ARCHITECTURE.md
-- **Troubleshooting**: See TROUBLESHOOTING.md
-- **Enterprise deployment**: See DEPLOYMENT.md
+- **Setup help**: See docs/setup/README.md or open an issue
+- **Architecture questions**: See docs/architecture/README.md
+- **Troubleshooting**: See docs/troubleshooting/README.md
+- **Enterprise deployment**: See docs/deployment/README.md
 
 ---
 

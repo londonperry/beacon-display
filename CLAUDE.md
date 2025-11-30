@@ -14,7 +14,7 @@ AI assistant guidance for working with the BEACON codebase.
    - ALWAYS review relevant documentation before taking action
    - Understand whether the user is working on POC or Production deployment
    - Consider hardware, budget, security, and scale constraints in all decisions
-   - Reference the correct documentation (README, GETTING-STARTED, ARCHITECTURE, etc.)
+   - Reference the correct documentation (README, docs/setup, docs/architecture, etc.)
 
 2. **Question Before Assuming**
    - When user intent is ambiguous, ask clarifying questions BEFORE writing code or making changes
@@ -156,7 +156,7 @@ To rotate the Azure client secret, create a new secret in Azure Portal and updat
 - **Security**: POC stores secrets in `.env` (acceptable), Production requires Key Vault
 
 ## Recommended Approach
-Since you're in POC phase (laptop-version), update `.env` directly. When moving to production, plan to migrate secrets to Key Vault as documented in DEPLOYMENT.md:228-233.
+Since you're in POC phase (laptop-version), update `.env` directly. When moving to production, plan to migrate secrets to Key Vault as documented in docs/deployment/planning.md.
 
 ## Need More Info?
 Are you preparing to move to production soon? If yes, I can help set up Key Vault now.
@@ -186,10 +186,10 @@ When user reports an issue:
    - "Where are you seeing this error: laptop browser, Pi display, or token service logs?"
    - "Are you in POC setup (laptop token service) or production (cloud token service)?"
 
-2. **Reference TROUBLESHOOTING.md**:
-   - Check if issue is documented in TROUBLESHOOTING.md
+2. **Reference docs/troubleshooting/README.md**:
+   - Check if issue is documented in docs/troubleshooting/README.md
    - Provide diagnostic commands from that doc
-   - Link to specific line numbers (e.g., TROUBLESHOOTING.md:83-86)
+   - Link to specific line numbers when helpful
 
 3. **Provide layered solutions**:
    - Quick fix (restart service, clear cache)
@@ -229,18 +229,18 @@ When writing or modifying code:
 | Document | Use When |
 |----------|----------|
 | **README.md** | Quick start, project overview, first-time users |
-| **GETTING-STARTED.md** | Step-by-step setup, phase-by-phase deployment |
-| **ARCHITECTURE.md** | Technical details, system design, component interaction |
-| **TROUBLESHOOTING.md** | Diagnosing issues, error resolution, performance problems |
-| **PROJECT-DEFINITION.md** | Business context, goals, budget, stakeholder info |
-| **DEPLOYMENT.md** | Production deployment, enterprise scale, cost models |
+| **docs/setup/README.md** | Step-by-step setup, phase-by-phase deployment |
+| **docs/architecture/README.md** | Technical details, system design, component interaction |
+| **docs/troubleshooting/README.md** | Diagnosing issues, error resolution, performance problems |
+| **docs/project/README.md** | Business context, goals, budget, stakeholder info |
+| **docs/deployment/README.md** | Production deployment, enterprise scale, cost models |
 
 **When to reference**:
-- Setup questions → GETTING-STARTED.md
-- "How does X work?" → ARCHITECTURE.md
-- "Why isn't X working?" → TROUBLESHOOTING.md
-- "How do I deploy to 100 stores?" → DEPLOYMENT.md
-- "What's the business case?" → PROJECT-DEFINITION.md
+- Setup questions → docs/setup/README.md
+- "How does X work?" → docs/architecture/README.md
+- "Why isn't X working?" → docs/troubleshooting/README.md
+- "How do I deploy to 100 stores?" → docs/deployment/README.md
+- "What's the business case?" → docs/project/README.md
 
 ---
 
@@ -252,7 +252,7 @@ When writing or modifying code:
 - "I'll assume you have Azure set up" (Check if they need setup guidance!)
 
 ❌ **Don't over-engineer**:
-- Suggesting Kubernetes for 10 devices (overkill, see DEPLOYMENT.md cost models)
+- Suggesting Kubernetes for 10 devices (overkill, see docs/deployment/README.md cost models)
 - Recommending Pi 4 when Pi Zero 2 W suffices (unnecessary cost)
 - Complex monitoring for POC (save for Production)
 
@@ -397,11 +397,11 @@ beacon-display/
 | File | Purpose |
 |------|---------|
 | **README.md** | Entry point and quick start |
-| **GETTING-STARTED.md** | Step-by-step setup guide (6 hours total) |
-| **ARCHITECTURE.md** | Technical architecture and stack details |
-| **TROUBLESHOOTING.md** | Common issues and diagnostic procedures |
-| **PROJECT-DEFINITION.md** | Business case, goals, stakeholder info |
-| **DEPLOYMENT.md** | Enterprise deployment (pilot → production) |
+| **docs/setup/README.md** | Step-by-step setup guide (6 hours total) |
+| **docs/architecture/README.md** | Technical architecture and stack details |
+| **docs/troubleshooting/README.md** | Common issues and diagnostic procedures |
+| **docs/project/README.md** | Business case, goals, stakeholder info |
+| **docs/deployment/README.md** | Enterprise deployment (pilot → production) |
 
 ---
 
@@ -575,7 +575,7 @@ Flash OS, deploy files, run install script, configure auto-start
 
 ## Production Deployment
 
-When adapting for corporate deployment (see DEPLOYMENT.md):
+When adapting for corporate deployment (see docs/deployment/README.md):
 - Deploy token service to company infrastructure (HTTPS)
 - Use Azure App Service, company VM, or Docker
 - Implement network segmentation (IoT VLAN)
@@ -584,7 +584,7 @@ When adapting for corporate deployment (see DEPLOYMENT.md):
 - Store-specific data filtering (row-level security)
 - Security review by IT team
 
-**Cost Optimization** (DEPLOYMENT.md):
+**Cost Optimization** (docs/deployment/README.md):
 - Baseline 100-device TCO: $86K over 5 years (entry tier, commercial platform)
 - Optimized TCO (custom management): $31K over 5 years (64% reduction)
 - Mixed-tier approach: $78K over 5 years (optimized for use case)
@@ -594,13 +594,13 @@ When adapting for corporate deployment (see DEPLOYMENT.md):
 
 ## For Detailed Information
 
-- **Setup**: [GETTING-STARTED.md](GETTING-STARTED.md) - Step-by-step POC deployment
-- **Architecture**: [ARCHITECTURE.md](ARCHITECTURE.md) - Technical deep dive
-- **Issues**: [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Diagnostic procedures
-- **Enterprise**: [DEPLOYMENT.md](DEPLOYMENT.md) - Pilot and production rollout
-- **Business Case**: [PROJECT-DEFINITION.md](PROJECT-DEFINITION.md) - Goals and stakeholders
+- **Setup**: [docs/setup/README.md](docs/setup/README.md) - Step-by-step POC deployment
+- **Architecture**: [docs/architecture/README.md](docs/architecture/README.md) - Technical deep dive
+- **Issues**: [docs/troubleshooting/README.md](docs/troubleshooting/README.md) - Diagnostic procedures
+- **Enterprise**: [docs/deployment/README.md](docs/deployment/README.md) - Pilot and production rollout
+- **Business Case**: [docs/project/README.md](docs/project/README.md) - Goals and stakeholders
 
 ---
 
-**Last Updated**: 2025-11-14 17:32:18
+**Last Updated**: 2025-11-30 13:03:39
 **Maintainer**: This file is maintained as project context for AI assistants

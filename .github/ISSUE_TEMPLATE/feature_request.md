@@ -53,9 +53,9 @@ Does this feature have any security implications?
 
 Link to relevant documentation:
 
-- [ARCHITECTURE.md](../../ARCHITECTURE.md) - System design
-- [DEPLOYMENT.md](../../DEPLOYMENT.md) - Enterprise deployment
-- [TROUBLESHOOTING.md](../../TROUBLESHOOTING.md) - Current limitations
+- [ARCHITECTURE.md](../../docs/architecture/README.md) - System design
+- [DEPLOYMENT.md](../../docs/deployment/README.md) - Enterprise deployment
+- [TROUBLESHOOTING.md](../../docs/troubleshooting/README.md) - Current limitations
 
 ---
 

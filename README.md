@@ -1,9 +1,9 @@
 # BEACON Display System
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Status: POC](https://img.shields.io/badge/Status-POC-blue)](PROJECT-DEFINITION.md)
+[![Status: POC](https://img.shields.io/badge/Status-POC-blue)](docs/project/README.md)
 [![Node.js 18+](https://img.shields.io/badge/Node.js-18%2B-green)](https://nodejs.org/)
-[![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-Zero%202%20W-red)](HARDWARE-COMPATIBILITY.md)
+[![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-Zero%202%20W-red)](docs/hardware/README.md)
 
 **B**usiness **E**mbedded **A**nalytics **C**ontent **O**n **N**etwork
 
@@ -58,21 +58,31 @@ open index.html
 
 ## Documentation
 
+### Quick Start
+- **[Setup Guide](docs/setup/README.md)** - Complete POC deployment (6 hours, all phases)
+- **[Troubleshooting](docs/troubleshooting/README.md)** - Common issues and quick diagnostics
+- **[Architecture Overview](docs/architecture/README.md)** - System design and technical details
+
+### Complete Documentation Index
+📖 **[Browse All Documentation](docs/README.md)** - Complete index organized by audience and task
+
+**Key Documents**:
 | Document | Purpose |
 |----------|---------|
-| **[GETTING-STARTED.md](GETTING-STARTED.md)** | Setup guide for POC deployment |
-| **[ARCHITECTURE.md](ARCHITECTURE.md)** | Technical architecture and stack details |
-| **[HARDWARE-COMPATIBILITY.md](HARDWARE-COMPATIBILITY.md)** | Multi-device support and hardware tiers |
-| **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** | Common issues and diagnostics |
-| **[PROJECT-DEFINITION.md](PROJECT-DEFINITION.md)** | Business case and project scope |
-| **[DEPLOYMENT.md](DEPLOYMENT.md)** | Enterprise deployment guide |
+| **[Setup Guide](docs/setup/README.md)** | 5-phase POC setup (browser → Pi deployment) |
+| **[Architecture](docs/architecture/README.md)** | Technical design and authentication flow |
+| **[Hardware Guide](docs/hardware/README.md)** | Device compatibility and specifications |
+| **[Troubleshooting](docs/troubleshooting/README.md)** | Issues by component (token service, Pi, network, etc.) |
+| **[Deployment Guide](docs/deployment/README.md)** | Enterprise rollout (pilot to 100+ locations) |
+| **[Business Case](docs/project/business-case.md)** | ROI, requirements, stakeholder alignment |
+| **[Cost Analysis](docs/deployment/cost-analysis.md)** | TCO models and financial justification |
 
 ## Prerequisites
 
 **Hardware**: Raspberry Pi (Zero 2 W / 4 / 5) or compatible device ($15-60), 32GB+ microSD ($10), HDMI cable ($8), Power supply ($8-12)
 **Accounts**: Azure (free tier), Power BI Pro or workspace access
 **Software**: Node.js 18+, Raspberry Pi Imager
-**Compatibility**: See [HARDWARE-COMPATIBILITY.md](HARDWARE-COMPATIBILITY.md) for full device support list
+**Compatibility**: See [Hardware Guide](docs/hardware/README.md) for full device support list
 
 ## Project Structure
 
@@ -98,7 +108,7 @@ We welcome contributions from the community! Whether you're fixing bugs, adding 
 
 **Getting Started:**
 1. Read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
-2. Review [GETTING-STARTED.md](GETTING-STARTED.md) for setup
+2. Review [Setup Guide](docs/setup/README.md) for setup
 3. Check [existing issues](https://github.com/londonperry/beacon-display/issues) to avoid duplicates
 4. Open an issue or discussion before major changes
 
@@ -113,14 +123,18 @@ We welcome contributions from the community! Whether you're fixing bugs, adding 
 
 ## 📚 Documentation
 
-- **[GETTING-STARTED.md](GETTING-STARTED.md)** - Step-by-step POC setup (6 hours)
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System design and technical deep dive
+**Complete documentation** organized by audience and task: **[Browse All Documentation](docs/README.md)**
+
+- **[Setup Guide](docs/setup/README.md)** - Step-by-step POC setup (6 hours, 5 phases)
+- **[Architecture](docs/architecture/README.md)** - System design and technical deep dive
+- **[Hardware Guide](docs/hardware/README.md)** - Device support and specifications
+- **[Troubleshooting](docs/troubleshooting/README.md)** - Common issues and diagnostics
+- **[Deployment Guide](docs/deployment/README.md)** - Enterprise deployment (pilot to production)
+- **[Business Case](docs/project/business-case.md)** - Business case and project scope
+- **[Cost Analysis](docs/deployment/cost-analysis.md)** - TCO models and ROI
 - **[SECURITY.md](SECURITY.md)** - Security model, vulnerabilities, best practices
-- **[HARDWARE-COMPATIBILITY.md](HARDWARE-COMPATIBILITY.md)** - Device support and specs
-- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Common issues and solutions
-- **[PROJECT-DEFINITION.md](PROJECT-DEFINITION.md)** - Business case and project scope
-- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Enterprise deployment guide
-- **[CLAUDE.md](.claude/CLAUDE.md)** - AI assistant guidance (for contributors using Claude)
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[CLAUDE.md](.claude/CLAUDE.md)** - AI assistant guidance
 
 ## 📊 Project Status
 
@@ -155,13 +169,15 @@ BEACON is built on excellent open-source projects:
 
 ## 🚀 Quick Links
 
-- **Setup**: [GETTING-STARTED.md](GETTING-STARTED.md) - Complete POC deployment guide
+- **Setup**: [Setup Guide](docs/setup/README.md) - Complete POC deployment (6 hours)
+- **Architecture**: [Architecture Overview](docs/architecture/README.md) - How it works
+- **Hardware**: [Hardware Guide](docs/hardware/README.md) - Device options
+- **Troubleshoot**: [Troubleshooting](docs/troubleshooting/README.md) - Fix issues fast
+- **Deploy**: [Deployment Guide](docs/deployment/README.md) - Scale to enterprise
+- **Business**: [Business Case](docs/project/business-case.md) - ROI and justification
 - **Security**: [SECURITY.md](SECURITY.md) - Security model and best practices
-- **Troubleshoot**: [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Common issues and diagnostics
-- **Learn More**: [ARCHITECTURE.md](ARCHITECTURE.md) - Technical details
-- **Deploy**: [DEPLOYMENT.md](DEPLOYMENT.md) - Enterprise deployment
 - **Contribute**: [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines
 
 ---
 
-**Ready to get started?** See [GETTING-STARTED.md](GETTING-STARTED.md) for step-by-step setup instructions.
+**Ready to get started?** 👉 **[Browse All Documentation](docs/README.md)** or go straight to **[Setup Guide](docs/setup/README.md)** for step-by-step instructions.

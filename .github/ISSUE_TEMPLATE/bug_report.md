@@ -66,14 +66,14 @@ For display client errors (F12 in Chromium):
 
 Add any other context about the problem here.
 
-- Have you reviewed TROUBLESHOOTING.md?
+- Have you reviewed the troubleshooting guide?
 - Is this blocking your deployment?
 - Are you following POC or Production setup?
 
 ---
 
 **Checklist before submitting:**
-- [ ] I've checked TROUBLESHOOTING.md
+- [ ] I've checked [TROUBLESHOOTING.md](../../docs/troubleshooting/README.md)
 - [ ] I've reviewed similar existing issues
 - [ ] I've provided relevant logs or error messages
 - [ ] I've specified my environment details

@@ -61,9 +61,9 @@ Describe what's happening:
 
 Have you checked these?
 
-- [ ] [GETTING-STARTED.md](../../GETTING-STARTED.md) - Step-by-step setup guide
-- [ ] [TROUBLESHOOTING.md](../../TROUBLESHOOTING.md) - Common issues
-- [ ] [ARCHITECTURE.md](../../ARCHITECTURE.md) - How it works
+- [ ] [GETTING-STARTED.md](../../docs/setup/README.md) - Step-by-step setup guide
+- [ ] [TROUBLESHOOTING.md](../../docs/troubleshooting/README.md) - Common issues
+- [ ] [ARCHITECTURE.md](../../docs/architecture/README.md) - How it works
 - [ ] [README.md](../../README.md) - Quick overview
 
 ## 🔍 Diagnostic Info
